@@ -5,13 +5,16 @@ from bs4 import BeautifulSoup
 import time
 import pandas as pd
 import csv
+import numpy as np
 
 def write_to_folder(yy):
     save_path = '/Users/JackTsai/Desktop/Civic_Weather_Crawler/{}/'.format(yy)
     return save_path
 def download_weather(yy,mm,dd):
     # Like a human 1 : do not crawl too fast, it will let me recognize as a bot
-    time.sleep(3)
+    seed = np.random.randint(low = 2,high = 5, size = 1)
+    seed = int(seed)
+    time.sleep(seed)
     # Like a human 2 : Made me like a human rather than a bot, add header
     headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","accept-encoding":"gzip, deflate, br","accept-language":"zh-TW,zh;q=0.8,en-US;q=0.6,en;q=0.4,zh-CN;q=0.2"}
     session = requests.Session()
@@ -189,25 +192,23 @@ def check_mmdd(yy, mm):
 
       
 #print("Jack")
-yy = 2011
+yy = 2012
 
 #file_path = "/{}".format(yy)
 #os.mkdir(file_path)
 
 
-for mm in range(1,13):
+for mm in range(2,13):
     dd = check_mmdd(yy, mm)
     for day in range(1,dd+1):
         
         text = download_weather(yy,mm,day)
         text_clean = clean_data(text)
         # Seperate 2 kinds of column number, for keeping csv in shape
-        if "Windchill" in text_clean or "Heat Index" in text_clean:
-            write_to_csv_20121031(yy,mm,day,text)
-            print(yy,mm,day,"Done")
-        else:
-            write_to_csv_20121030(yy,mm,day,text)
-            print(yy,mm,day,"Done")
+        
+        write_to_csv(yy,mm,day,text)
+        print(yy,mm,day,"Done")
+        
 '''
 for yy in range (2009,2017):
     for mm in range(13):
