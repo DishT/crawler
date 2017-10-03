@@ -6,6 +6,7 @@ import time
 import pandas as pd
 import csv
 import numpy as np
+from datetime import datetime
 
 def write_to_folder(yy):
     save_path = '/Users/JackTsai/Desktop/Civic_Weather_Crawler/{}/'.format(yy)
@@ -159,8 +160,7 @@ def write_to_csv(yy,mm,dd,text):
             #print(line)
             line = ""
             count = 0
-        day_counter += 1
-    return day_counter
+        
 
 
 
@@ -196,23 +196,28 @@ def check_mmdd(yy, mm):
 
       
 #print("Jack")
-yy = 2016
+yy = input("Enter the year u want to explore:")
+
 
 #file_path = "/{}".format(yy)
 #os.mkdir(file_path)
-
+t0 = datetime.now()
 
 for mm in range(1,13):
     dd = check_mmdd(yy, mm)
     for day in range(1,dd+1):
+        try:
+            text = download_weather(yy,mm,day)
+            text_clean = clean_data(text)
+            # Seperate 2 kinds of column number, for keeping csv in shape
         
-        text = download_weather(yy,mm,day)
-        text_clean = clean_data(text)
-        # Seperate 2 kinds of column number, for keeping csv in shape
-        
-        day_counter = write_to_csv(yy,mm,day,text)
-        print(yy,mm,day,"Done","Day of {}".format(yy),day_counter)
-        
+            write_to_csv(yy,mm,day,text)
+            day_counter = day_counter + 1
+            print(yy,mm,day,"Done","Day of {}".format(yy),day_counter)
+        except:
+            print("there is no weather data")
+dt1 = datetime.now() - t0
+print ("Total use {} seconds".format(t1), "and also collect {} days in {}".format(day_counter,yy))      
 '''
 for yy in range (2009,2017):
     for mm in range(13):
