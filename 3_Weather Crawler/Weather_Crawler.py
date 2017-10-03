@@ -196,13 +196,13 @@ def check_mmdd(yy, mm):
 
       
 #print("Jack")
-yy = input("Enter the year u want to explore:")
+yy = int(input("Enter the year u want to explore:"))
 
 
 #file_path = "/{}".format(yy)
 #os.mkdir(file_path)
 t0 = datetime.now()
-
+day_counter = 0
 for mm in range(1,13):
     dd = check_mmdd(yy, mm)
     for day in range(1,dd+1):
@@ -215,9 +215,13 @@ for mm in range(1,13):
             day_counter = day_counter + 1
             print(yy,mm,day,"Done","Day of {}".format(yy),day_counter)
         except:
-            print("there is no weather data")
+            print("Something Wrong !")
+            break
+
 dt1 = datetime.now() - t0
-print ("Total use {} seconds".format(t1), "and also collect {} days in {}".format(day_counter,yy))      
+dt_miniute = dt1 // 60
+dt_second = dt1 % 60
+print ("Total use {} min {} sec".format(dt_miniute,dt_second), "and also collect {} days in {}".format(day_counter,yy))      
 '''
 for yy in range (2009,2017):
     for mm in range(13):
