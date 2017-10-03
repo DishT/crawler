@@ -142,13 +142,15 @@ def write_to_csv(yy,mm,dd,text):
             f.write(line+"\n")
             print(line)
             line = ""
-# Deal the rest of data
+    # Deal the rest of data
     count = 0
+    day_counter = 0
     line = ""
     for i in range(len_column,len(text)):  
         if count != (len_column - 1):
             line = line + text[i] +","
             count = count + 1
+            
             #print(i,count)
         else:
             line = line + text[i]+"\n"
@@ -157,6 +159,8 @@ def write_to_csv(yy,mm,dd,text):
             #print(line)
             line = ""
             count = 0
+        day_counter += 1
+    return day_counter
 
 
 
@@ -192,13 +196,13 @@ def check_mmdd(yy, mm):
 
       
 #print("Jack")
-yy = 2012
+yy = 2016
 
 #file_path = "/{}".format(yy)
 #os.mkdir(file_path)
 
 
-for mm in range(2,13):
+for mm in range(1,13):
     dd = check_mmdd(yy, mm)
     for day in range(1,dd+1):
         
@@ -206,8 +210,8 @@ for mm in range(2,13):
         text_clean = clean_data(text)
         # Seperate 2 kinds of column number, for keeping csv in shape
         
-        write_to_csv(yy,mm,day,text)
-        print(yy,mm,day,"Done")
+        day_counter = write_to_csv(yy,mm,day,text)
+        print(yy,mm,day,"Done","Day of {}".format(yy),day_counter)
         
 '''
 for yy in range (2009,2017):
