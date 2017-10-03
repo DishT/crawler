@@ -202,10 +202,12 @@ for mm in range(1,13):
         text = download_weather(yy,mm,day)
         text_clean = clean_data(text)
         # Seperate 2 kinds of column number, for keeping csv in shape
-        
-        write_to_csv(yy,mm,day,text)
-        print(yy,mm,day,"Done")
-        
+        if "Windchill" in text_clean or "Heat Index" in text_clean:
+            write_to_csv_20121031(yy,mm,day,text)
+            print(yy,mm,day,"Done")
+        else:
+            write_to_csv_20121030(yy,mm,day,text)
+            print(yy,mm,day,"Done")
 '''
 for yy in range (2009,2017):
     for mm in range(13):
