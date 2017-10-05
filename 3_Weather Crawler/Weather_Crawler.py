@@ -19,7 +19,7 @@ def download_weather(yy,mm,dd):
     # Like a human 2 : Made me like a human rather than a bot, add header
     headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","accept-encoding":"gzip, deflate, br","accept-language":"zh-TW,zh;q=0.8,en-US;q=0.6,en;q=0.4,zh-CN;q=0.2"}
     session = requests.Session()
-    re = session.get("https://www.wunderground.com/history/airport/KNYC/{}/{}/{}/DailyHistory.html?req_city=&req_state=&req_statename=&reqdb.zip=&reqdb.magic=&reqdb.wmo=&MR=1".format(yy,mm,dd))
+    re = session.get("https://www.wunderground.com/history/airport/KNYC/{}/{}/{}/DailyHistory.html?req_city=&req_state=&req_statename=&reqdb.zip=&reqdb.magic=&reqdb.wmo=&MR=1".format(yy,mm,dd), headers = headers)
 
     soup = BeautifulSoup(re.text,"html.parser")
     div = soup.find(id = "observations_details")
